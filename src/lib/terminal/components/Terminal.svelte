@@ -14,7 +14,9 @@
 	<History />
 
 	<div class="flex flex-col md:flex-row">
-		<Ps1 />
+		<div class="flex-shrink-0">
+			<Ps1 />
+		</div>
 		<Input />
 	</div>
 </main>
