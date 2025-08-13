@@ -1,4 +1,3 @@
-import { command } from '$app/server';
 import { themeState } from '$lib/states/themeState.svelte';
 import * as history from '$lib/terminal/states/history.svelte';
 
