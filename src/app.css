@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+
+/* Import Comic Shanns Mono Nerd Font */
+@font-face {
+	font-family: 'ComicShannsMono Nerd Font';
+	src: url('./lib/assets/fonts/ComicShannsMonoNerdFontMono-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'ComicShannsMono Nerd Font';
+	src: url('./lib/assets/fonts/ComicShannsMonoNerdFontMono-Bold.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+@layer base {
+	* {
+		line-height: normal;
+	}
+}
