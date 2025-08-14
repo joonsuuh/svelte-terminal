@@ -18,7 +18,6 @@
 	});
 
 	async function sendCommand() {
-		
 		try {
 			const output = await executeCommand(currentCommand);
 			history.addCommand(currentCommand);
@@ -98,5 +97,6 @@
 		class="w-full border-none bg-transparent px-2 outline-none"
 		style="color: {theme.foreground}; background: transparent; caret-color: {theme.cursorColor};"
 		placeholder=""
+		name="command-input"
 	/>
 </div>

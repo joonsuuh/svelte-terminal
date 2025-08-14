@@ -4,10 +4,9 @@ import * as history from '$lib/terminal/states/history.svelte';
 // --- Helper functions ---
 function commandUsage(command: string): string {
 	const commandDef = commandDefinitions[command];
-	const man =
-`Usage:
+	const man = `Usage:
   ${commandDef.usage}
-${'Examples:\n  ' + commandDef.examples?.map(ex => `${ex}`).join('\n  ') || 'No examples available.'}`;
+${'Examples:\n  ' + commandDef.examples?.map((ex) => `${ex}`).join('\n  ') || 'No examples available.'}`;
 	return man;
 }
 
@@ -55,7 +54,7 @@ function getLiveAge(birthDate: Date): string {
 				ageElement.textContent = getCurrentAge(birthDate);
 			};
 
-			// Solid 10fps 
+			// Solid 10fps
 			const interval = setInterval(updateAge, 100);
 			activeIntervals.add(interval);
 		}
@@ -158,7 +157,7 @@ Type 'fetch' to see more info.`,
 				})
 				.join('\n')}`;
 		},
-		description: 'Show this help message',
+		description: 'Show this help message'
 	},
 
 	clear: {
@@ -194,7 +193,7 @@ Type 'fetch' to see more info.`,
 				case 'help':
 					return commandUsage('theme');
 				default:
-					return `Unknown theme command: ${args[0]}\nType 'theme --help' for usage.`;;
+					return `Unknown theme command: ${args[0]}\nType 'theme --help' for usage.`;
 			}
 		},
 		description: 'Manage terminal themes',
@@ -205,7 +204,7 @@ Type 'fetch' to see more info.`,
 				list: {},
 				ls: {},
 				set: {
-					options: themeState.all.map(theme => theme.name)
+					options: themeState.all.map((theme) => theme.name)
 				},
 				next: {},
 				current: {},
@@ -217,14 +216,15 @@ Type 'fetch' to see more info.`,
 	},
 
 	// --- API commands ---
-	github: {
+	repo: {
 		execute: async () => {
-			window.open('https://github.com/joonsuuh', '_blank');
+			window.open('https://github.com/joonsuuh/svelte-terminal', '_blank');
 
 			return 'Opening repo...';
 		},
-		description: `Go to my GitHub page`,
+		description: `Open source code on GitHub`
 	},
+	
 	weather: {
 		execute: async (args: string[]) => {
 			const city = args.join('+');
@@ -238,16 +238,16 @@ Type 'fetch' to see more info.`,
 
 			const weather = await fetch(`https://wttr.in/${city}?Tu`);
 			const text = await weather.text();
-			
+
 			// Trim lines because ?A doesn't work with current font
 			const lines = text.split('\n');
 			const trimmedLines = lines.slice(297, -13); // remove html/css stuff
-			
+
 			return trimmedLines.join('\n');
 		},
 		description: 'Fetch current weather for a city',
 		usage: 'weather [city]',
-		examples: ['weather nyc', 'weather sf'],
+		examples: ['weather nyc', 'weather sf']
 	},
 
 	// The Eternal Cycle of Editors
@@ -272,7 +272,8 @@ Type 'fetch' to see more info.`,
 	},
 
 	emacs: {
-		execute: () => `Command not found: 'emacs'. Some how we lost the plot... just use 'code' i.e. vscode.
+		execute:
+			() => `Command not found: 'emacs'. Some how we lost the plot... just use 'code' i.e. vscode.
 (It actually works out of the box)`,
 		description: 'Almost an OS, but lacks an editor'
 	},
@@ -327,11 +328,11 @@ export function getCompletions(input: string): string[] {
 	if (!input.trim()) return [];
 
 	const parts = input.trim().split(' ');
-	const [command, ...args] = parts.map(part => part.toLowerCase());
+	const [command, ...args] = parts.map((part) => part.toLowerCase());
 
 	// Complete main commands
 	if (parts.length === 1) {
-		return Object.keys(commandDefinitions).filter(cmd => cmd.startsWith(command));
+		return Object.keys(commandDefinitions).filter((cmd) => cmd.startsWith(command));
 	}
 
 	// Complete subcommands and options
@@ -341,7 +342,7 @@ export function getCompletions(input: string): string[] {
 	// Navigate to the appropriate completion level
 	let completion = commandDef.completions;
 	const completedArgs = args.slice(0, -1);
-	
+
 	for (const arg of completedArgs) {
 		if (!completion.subcommands?.[arg]) return [];
 		completion = completion.subcommands[arg];
@@ -356,19 +357,19 @@ export function getCompletions(input: string): string[] {
 	// Filter by partial input and return full commands
 	const partialInput = args[args.length - 1] || '';
 	return allOptions
-		.filter(option => option.toLowerCase().startsWith(partialInput))
-		.map(option => [command, ...completedArgs, option].join(' '));
+		.filter((option) => option.toLowerCase().startsWith(partialInput))
+		.map((option) => [command, ...completedArgs, option].join(' '));
 }
 
 export function applyTabCompletion(input: string, completions: string[]): { newInput: string } {
 	if (completions.length === 0) {
 		return { newInput: input.trim() + ' ' };
 	}
-	
+
 	if (completions.length === 1) {
 		return { newInput: completions[0] + ' ' };
 	}
-	
+
 	// Find common prefix for multiple completions
 	const commonPrefix = completions.reduce((prefix, completion) => {
 		let i = 0;
