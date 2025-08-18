@@ -1,20 +1,15 @@
 <script lang="ts">
-	import { themeState } from '$lib/states/themeState.svelte';
+	import { onMount } from 'svelte';
 	import * as history from '../states/history.svelte';
 	import { executeCommand, getCompletions, applyTabCompletion } from '../utils/commands';
-	import { onMount } from 'svelte';
 
 	let currentCommand = $state('');
 	let commandInput = $state<HTMLInputElement>();
 
 	onMount(async () => {
-		commandInput?.focus();
-		// show banner on first load
-		if (history.getHistoryLength() === 0) {
-			history.addCommand('banner');
-			const output = await executeCommand('banner');
-			history.updateLastCommandOutput(output);
-		}
+		const output = await executeCommand('banner');
+		history.addCommand('banner');
+		history.updateLastCommandOutput(output);
 	});
 
 	async function sendCommand() {
@@ -63,8 +58,6 @@
 		}
 	}
 
-	let theme = $derived(themeState.current);
-
 	// Auto-focus input
 	$effect(() => {
 		if (commandInput) {
@@ -95,7 +88,6 @@
 		bind:value={currentCommand}
 		onkeydown={handleKeydown}
 		class="w-full border-none bg-transparent px-2 outline-none"
-		style="color: {theme.foreground}; background: transparent; caret-color: {theme.cursorColor};"
 		placeholder=""
 		name="command-input"
 	/>

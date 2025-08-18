@@ -1,5 +1,6 @@
-import { themeState } from '$lib/states/themeState.svelte';
+import { themeState } from '$lib/states/theme.svelte';
 import * as history from '$lib/terminal/states/history.svelte';
+import type { CommandDef } from '../types/command';
 
 // --- Helper functions ---
 function commandUsage(command: string): string {
@@ -69,22 +70,6 @@ function clearAllAgeIntervals(): void {
 	activeIntervals.clear();
 }
 
-const BIRTH_DATE = new Date('2002-01-10'); // Replace with your birth date
-
-// --- Commands interfaces ---
-interface CommandDef {
-	execute: (args: string[]) => Promise<string> | string;
-	description?: string;
-	usage?: string;
-	examples?: string[];
-	completions?: CompletionDef;
-}
-
-interface CompletionDef {
-	options?: string[]; // possible completions
-	subcommands?: Record<string, CompletionDef>; // infinite subcommands?
-}
-
 // -----------------------------
 // --- Add new commands here ---
 // -----------------------------
@@ -117,6 +102,7 @@ Type 'fetch' to see more info.`,
 
 			const OS = ['Fedora Linux 41', 'macOS', 'Windows'];
 			const OSList = OS.map((os) => span(os)).join(' / ');
+			const BIRTH_DATE = new Date('2002-01-10');
 
 			return `<div style="color: var(--bright-red-color)">
               ++++++++++++     		joonsuuh@earth 
@@ -215,16 +201,16 @@ Type 'fetch' to see more info.`,
 		}
 	},
 
-	// --- API commands ---
 	repo: {
-		execute: async () => {
+		execute: () => {
 			window.open('https://github.com/joonsuuh/svelte-terminal', '_blank');
 
 			return 'Opening repo...';
 		},
-		description: `Open source code on GitHub`
+		description: `Opens source code on GitHub`
 	},
-	
+
+	// --- API commands ---
 	weather: {
 		execute: async (args: string[]) => {
 			const city = args.join('+');

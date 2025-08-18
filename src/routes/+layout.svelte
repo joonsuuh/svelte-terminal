@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
-	import { themeState } from '$lib/states/themeState.svelte';
+	import { themeState } from '$lib/states/theme.svelte';
 
 	let { children } = $props();
 	let currentTheme = $derived(themeState.current);
@@ -12,7 +12,6 @@
 </svelte:head>
 
 <div
-	class="min-h-screen transition-colors"
 	style="
 		--bg-color: {currentTheme.background};
 		--fg-color: {currentTheme.foreground};
@@ -39,3 +38,14 @@
 >
 	{@render children?.()}
 </div>
+
+<style>
+	/* Terminal Font */
+	@font-face {
+		font-family: 'ComicShannsMono Nerd Font';
+		src: url('$lib/assets/fonts/ComicShannsMonoNerdFontMono-Regular-minimal.woff2') format('woff2');
+		font-weight: normal;
+		font-style: normal;
+		font-display: block;
+	}
+</style>

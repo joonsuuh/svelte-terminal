@@ -34,7 +34,7 @@ You can preview the production build with `pnpm run preview`.
 more commands for `commands.ts`
 
 - [ ] `sudo rm -rf /`
-- [ ] `cd` command
+- [ ] `cd` command?
 - [ ] links to repos/projects
 - [ ] `open blog` | `cd blog`
   - [ ] `u d q` motions
