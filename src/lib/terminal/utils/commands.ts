@@ -100,8 +100,8 @@ Type 'fetch' to see more info.`,
 			];
 			const frameworkLinks = frameworks.map((f) => link(f.url, f.name)).join(' / ');
 
-			const OS = ['Fedora Linux 41', 'macOS', 'Windows'];
-			const OSList = OS.map((os) => span(os)).join(' / ');
+			const OS = ['Fedora Linux 42', 'macOS', 'Windows'];
+			const OSList = OS.map((os) => span(os)).join(' > ');
 			const BIRTH_DATE = new Date('2002-01-10');
 
 			return `<div style="color: var(--bright-red-color)">
